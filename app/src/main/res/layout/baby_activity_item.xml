@@ -29,7 +29,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
-            app:startIconDrawable="@drawable/ic_eating"
+            app:startIconDrawable="@drawable/ic_feeding"
             app:startIconTint="@null">
             
             <TextView

@@ -170,7 +170,7 @@ public class BabyActivityAdapter extends RecyclerView.Adapter<BabyActivityAdapte
 
         int color = Color.MAGENTA;
 
-        if (category.equals("SLEEPING") || category.equals("EXERCISING")) {
+        if (category.equals("SLEEP") || category.equals("PLAYTIME")) {
 
             double totalMinutes = babyActivity.getDuration();
             int hours = (int) (totalMinutes / 60);
@@ -187,16 +187,16 @@ public class BabyActivityAdapter extends RecyclerView.Adapter<BabyActivityAdapte
 
             viewHolder.amountView.setText(formattedDuration);
             viewHolder.amountView.setTextColor(color);
-        } else if (category.equals("EATING")) {
+        } else if (category.equals("FEEDING")) {
             double intake = babyActivity.getIntake();
             @SuppressLint("DefaultLocale") String formattedIntake;
             formattedIntake = String.format("%dml",  (int) intake);
 
             viewHolder.amountView.setText(formattedIntake);
             viewHolder.amountView.setTextColor(color);
-        } else if (category.equals("POOPING")) {
+        } else if (category.equals("DIAPER_CHANGE")) {
             @SuppressLint("DefaultLocale") String Check;
-            if (babyActivity.getPoop_check()) {
+            if (babyActivity.getDiaper_check()) {
                 Check = "OK";
             } else {
                 Check = "⚠";
@@ -205,7 +205,7 @@ public class BabyActivityAdapter extends RecyclerView.Adapter<BabyActivityAdapte
             viewHolder.amountView.setTextColor(color);
         } else {
             @SuppressLint("DefaultLocale") String Check;
-            if (babyActivity.getVitamin_check()) {
+            if (babyActivity.getMedicine_check()) {
                 Check = "OK";
             } else {
                 Check = "⚠";

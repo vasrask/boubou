@@ -138,7 +138,7 @@ public class BabyActivitiesFragment extends Fragment {
         recyclerView.scrollToPosition(0);
 
 
-        List<String> babyActivityCategories = Arrays.asList("SLEEPING", "EATING", "POOPING", "VITAMINS", "EXERCISING", "OTHER");
+        List<String> babyActivityCategories = Arrays.asList("SLEEP", "FEEDING", "DIAPER_CHANGE", "MEDICINE", "PLAYTIME", "OTHER");
 
         String upperCaseFilter = selectedFilter.toUpperCase();
 

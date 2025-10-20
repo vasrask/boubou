@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/sleeping_item" android:title="@string/sleeping" />
-    <item android:id="@+id/eating_item" android:title="@string/eating" />
-    <item android:id="@+id/pooping_item" android:title="@string/pooping"  />
-    <item android:id="@+id/vitamins_item" android:title="@string/vitamins" />
-    <item android:id="@+id/exercising_item" android:title="@string/exercising" />
+    <item android:id="@+id/sleep_item" android:title="@string/sleep" />
+    <item android:id="@+id/feeding_item" android:title="@string/feeding" />
+    <item android:id="@+id/diaperChange_item" android:title="@string/diaperChange"  />
+    <item android:id="@+id/medicine_item" android:title="@string/medicine" />
+    <item android:id="@+id/playtime_item" android:title="@string/playtime" />
     <item android:id="@+id/other_item"  android:title="@string/other" />
 </menu>

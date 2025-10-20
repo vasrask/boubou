@@ -11,8 +11,8 @@ public class BabyActivity {
 
     private String id;
     private double duration;
-    private boolean poop_check;
-    private boolean vitamin_check;
+    private boolean diaper_check;
+    private boolean medicine_check;
 
     private double intake;
     private String category;
@@ -28,9 +28,9 @@ public class BabyActivity {
         this.userId = userId;
         this.babyActivityType = category;
         this.category = category.name();
-        if (this.babyActivityType == BabyActivityType.SLEEPING || this.babyActivityType == BabyActivityType.EXERCISING) {
+        if (this.babyActivityType == BabyActivityType.SLEEP || this.babyActivityType == BabyActivityType.PLAYTIME) {
             this.duration = amount;
-        } else if (this.babyActivityType == BabyActivityType.EATING) {
+        } else if (this.babyActivityType == BabyActivityType.FEEDING) {
             this.intake = amount;
         }
         this.notes = notes;
@@ -42,10 +42,10 @@ public class BabyActivity {
         this.userId = userId;
         this.babyActivityType = category;
         this.category = category.name();
-        if (this.babyActivityType == BabyActivityType.POOPING) {
-            this.poop_check = check;
-        } else if (this.babyActivityType == BabyActivityType.VITAMINS) {
-            this.vitamin_check = check;
+        if (this.babyActivityType == BabyActivityType.DIAPER_CHANGE) {
+            this.diaper_check = check;
+        } else if (this.babyActivityType == BabyActivityType.MEDICINE) {
+            this.medicine_check = check;
         }
         this.notes = notes;
         this.timestamp = null;
@@ -99,20 +99,20 @@ public class BabyActivity {
         this.intake = intake;
     }
 
-    public boolean getPoop_check() {
-        return poop_check;
+    public boolean getDiaper_check() {
+        return diaper_check;
     }
 
-    public void setPoop_check(boolean check) {
-        this.poop_check = check;
+    public void setDiaper_check(boolean check) {
+        this.diaper_check = check;
     }
 
-    public boolean getVitamin_check() {
-        return vitamin_check;
+    public boolean getMedicine_check() {
+        return medicine_check;
     }
 
-    public void setVitamin_check(boolean check) {
-        this.vitamin_check = check;
+    public void setMedicine_check(boolean check) {
+        this.medicine_check = check;
     }
 
     public String getCategory() {
@@ -147,27 +147,27 @@ public class BabyActivity {
       sb.append("id='").append(id).append('\'')
               .append(", category='").append(category).append('\'');
       switch (category) {
-          case "SLEEPING":
-          case "EXERCISING":
+          case "SLEEP":
+          case "PLAYTIME":
               sb.append(", duration=").append(duration)
                       .append("m").append('\'');
               break;
-          case "EATING":
+          case "FEEDING":
               sb.append(", intake=").append(intake)
                       .append("ml").append('\'');
               break;
-          case "POOPING":
-              if (poop_check) {
-                  sb.append(", pooped").append('\'');
+          case "DIAPER_CHANGE":
+              if (diaper_check) {
+                  sb.append(", diapered").append('\'');
               } else {
-                  sb.append(", did not poop").append('\'');
+                  sb.append(", Did not change diaper").append('\'');
               }
               break;
-          case "VITAMINS":
-              if (vitamin_check) {
-                  sb.append(", took vitamins");
+          case "MEDICINE":
+              if (medicine_check) {
+                  sb.append(", took medicine");
               } else {
-                  sb.append(", did not take vitamins");
+                  sb.append(", did not take medicine");
               }
               break;
       }

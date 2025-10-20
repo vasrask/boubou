@@ -44,16 +44,16 @@ public class BabyActivityRepository {
         if (category == null) return BabyActivityType.OTHER;
 
         switch (category.toLowerCase().trim()) {
-            case "sleeping":
-                return BabyActivityType.SLEEPING;
-            case "eating":
-                return BabyActivityType.EATING;
-            case "pooping":
-                return BabyActivityType.POOPING;
-            case "vitamins":
-                return BabyActivityType.VITAMINS;
-            case "exercising":
-                return BabyActivityType.EXERCISING;
+            case "sleep":
+                return BabyActivityType.SLEEP;
+            case "feeding":
+                return BabyActivityType.FEEDING;
+            case "diaperChange":
+                return BabyActivityType.DIAPER_CHANGE;
+            case "medicine":
+                return BabyActivityType.MEDICINE;
+            case "playtime":
+                return BabyActivityType.PLAYTIME;
             default:
                 return BabyActivityType.OTHER;
         }
@@ -174,18 +174,18 @@ public class BabyActivityRepository {
             txMap.put("userId", userId);
             txMap.put("category", babyActivity.getCategory());
             switch (babyActivity.getCategory()){
-                case "SLEEPING":
-                case "EXERCISING":
+                case "SLEEP":
+                case "PLAYTIME":
                     txMap.put("duration", babyActivity.getDuration());
                     break;
-                case "EATING":
+                case "FEEDING":
                     txMap.put("intake", babyActivity.getIntake());
                     break;
-                case "POOPING":
-                    txMap.put("poop_check", babyActivity.getPoop_check());
+                case "DIAPER_CHANGE":
+                    txMap.put("diaper_check", babyActivity.getDiaper_check());
                     break;
-                case "VITAMINS":
-                    txMap.put("vitamin_check", babyActivity.getVitamin_check());
+                case "MEDICINE":
+                    txMap.put("medicine_check", babyActivity.getMedicine_check());
                     break;
                 default:
                     Log.i(TAG, "Invalid input");

@@ -226,30 +226,30 @@ public class HomeFragment extends Fragment {
 
 
         switch (category) {
-            case "Sleeping":
-            case "Exercising":
+            case "Sleep":
+            case "Playtime":
                 TextInputLayout activityTextInputLayout = (TextInputLayout) inflater.inflate(R.layout.input_metric_layout, dynamicInputContainer, false);
                 activityTextInputLayout.setHint("Duration (hours)");
                 dynamicInputContainer.addView(activityTextInputLayout);
                 activeInputView = activityTextInputLayout.findViewById(R.id.metricInput);
                 break;
-            case "Eating":
-                TextInputLayout eatingTextInputLayout = (TextInputLayout) inflater.inflate(R.layout.input_metric_layout, dynamicInputContainer, false);
-                eatingTextInputLayout.setHint("Intake (ml)");
-                dynamicInputContainer.addView(eatingTextInputLayout);
-                activeInputView = eatingTextInputLayout.findViewById(R.id.metricInput);
+            case "Feeding":
+                TextInputLayout feedingTextInputLayout = (TextInputLayout) inflater.inflate(R.layout.input_metric_layout, dynamicInputContainer, false);
+                feedingTextInputLayout.setHint("Intake (ml)");
+                dynamicInputContainer.addView(feedingTextInputLayout);
+                activeInputView = feedingTextInputLayout.findViewById(R.id.metricInput);
                 break;
-            case "Pooping":
-                MaterialSwitch poopSwitch = new MaterialSwitch(requireContext());
-                poopSwitch.setText("Did baby poop?");
-                dynamicInputContainer.addView(poopSwitch);
-                activeInputView = poopSwitch;
+            case "Diaper Change":
+                MaterialSwitch diaperSwitch = new MaterialSwitch(requireContext());
+                diaperSwitch.setText("Did baby change diaper?");
+                dynamicInputContainer.addView(diaperSwitch);
+                activeInputView = diaperSwitch;
                 break;
-            case "Vitamins":
-                MaterialSwitch vitaminSwitch = new MaterialSwitch(requireContext());
-                vitaminSwitch.setText("Did baby take vitamins?");
-                dynamicInputContainer.addView(vitaminSwitch);
-                activeInputView = vitaminSwitch;
+            case "Medicine":
+                MaterialSwitch medicineSwitch = new MaterialSwitch(requireContext());
+                medicineSwitch.setText("Did baby take medicine?");
+                dynamicInputContainer.addView(medicineSwitch);
+                activeInputView = medicineSwitch;
                 break;
             default:
                 TextInputLayout otherTextInputLayout = (TextInputLayout) inflater.inflate(R.layout.input_metric_layout, dynamicInputContainer, false);
@@ -279,21 +279,21 @@ public class HomeFragment extends Fragment {
         activityData.put("timestamp", System.currentTimeMillis());
 
         switch (selectedCategory) {
-            case "Sleeping":
-            case "Exercising":
+            case "Sleep":
+            case "Playtime":
                 double duration = getDurationInMinutes();
                 activityData.put("amount", duration);
                 activityData.put("unit", "minutes");
                 homeViewModel.storeBabyActivity(duration, false, selectedCategory, notes);
                 break;
-            case "Eating":
+            case "Feeding":
                 double intake = Double.parseDouble(((TextInputEditText) activeInputView).getText().toString().trim());
                 activityData.put("amount", intake);
                 activityData.put("unit", "ml");
                 homeViewModel.storeBabyActivity(intake, false, selectedCategory, notes);
                 break;
-            case "Pooping":
-            case "Vitamins":
+            case "Diaper Change":
+            case "Medicine":
                 if (dynamicInputContainer.getChildCount() > 0) {
                     MaterialSwitch checkSwitch = (MaterialSwitch) dynamicInputContainer.getChildAt(0);
                     activityData.put("check", checkSwitch.isChecked());

@@ -131,7 +131,7 @@ public class BabyActivitiesViewModel extends ViewModel {
 
 
     /**
-     * Category can be  - SLEEPING, VITAMINS, OTHER etc
+     * Category can be  - SLEEP, MEDICINE, OTHER etc
      * We check in the database and filter out the  documents
      *
      * @param type

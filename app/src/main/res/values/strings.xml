@@ -18,11 +18,11 @@
     <string name="duration">Duration</string>
     <string name="baby_activity">Baby Activity</string>
     <string name="add_baby_activity">Add baby activity</string>
-    <string name="sleeping">Sleeping</string>
-    <string name="eating">Eating</string>
-    <string name="pooping">Pooping</string>
-    <string name="vitamins">Vitamins</string>
-    <string name="exercising">Exercising</string>
+    <string name="sleep">Sleep</string>
+    <string name="feeding">Feeding</string>
+    <string name="diaperChange">Diaper Change</string>
+    <string name="medicine">Medicine</string>
+    <string name="playtime">Playtime</string>
     <string name="other">Other</string>
     <string name="login_title">Login with your account</string>
     <string name="edit_your_profile">Edit your profile</string>
@@ -35,19 +35,19 @@
     <string name="scroll_to_top">Scroll to top</string>
     <string name="delete_baby_activity">Delete baby activity</string>
     <string-array name="categories_array">
-        <item>Sleeping</item>
-        <item>Eating</item>
-        <item>Pooping</item>
-        <item>Vitamins</item>
-        <item>Exercising</item>
+        <item>Sleep</item>
+        <item>Feeding</item>
+        <item>Diaper Change</item>
+        <item>Medicine</item>
+        <item>Playtime</item>
         <item>Other</item>
     </string-array>
     <string-array name="sort_array">
-        <item>Sleeping</item>
-        <item>Eating</item>
-        <item>Pooping</item>
-        <item>Vitamins</item>
-        <item>Exercising</item>
+        <item>Sleep</item>
+        <item>Feeding</item>
+        <item>Diaper Change</item>
+        <item>Medicine</item>
+        <item>Playtime</item>
         <item>Date ↑</item>
         <item>Date ↓</item>
     </string-array>
