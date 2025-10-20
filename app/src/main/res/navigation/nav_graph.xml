@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:label="Home"
+        android:name="com.vasrask.boubou.fragments.HomeFragment"
+        android:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/nav_baby_activities"
+        android:name="com.vasrask.boubou.fragments.BabyActivitiesFragment"
+        android:label="BabyActivities"
+        android:layout="@layout/fragment_baby_activities" />
+
+    <fragment
+        android:id="@+id/nav_add"
+        android:name="com.vasrask.boubou.fragments.AddFragment"
+        android:label="Add"
+        android:layout="@layout/fragment_add" />
+
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.vasrask.boubou.fragments.ProfileFragment"
+        android:label="Profile"
+        android:layout="@layout/fragment_profile" />
+</navigation>

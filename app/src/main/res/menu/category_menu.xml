@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/sleeping"
+        android:title="@string/sleeping" />
+    <item
+        android:id="@+id/eating"
+        android:title="@string/eating" />
+    <item
+        android:id="@+id/pooping"
+        android:title="@string/pooping" />
+    <item
+        android:id="@+id/vitamins"
+        android:title="@string/vitamins" />
+    <item
+        android:id="@+id/exercising"
+        android:title="@string/exercising" />
+    <item
+        android:id="@+id/other"
+        android:title="@string/other" />
+</menu>
