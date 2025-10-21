@@ -57,46 +57,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginTop="8dp"/>
-        <!-- <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/activityTextInputLayout"
-            style="?attr/textInputFilledStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="Metric"
-            app:boxBackgroundMode="filled"
-            app:boxStrokeWidth="0dp"
-            app:boxStrokeWidthFocused="0dp"
-            app:endIconMode="clear_text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
-            app:startIconDrawable="@drawable/ic_time_24px">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editBabyActivityText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:backgroundTint="@color/md_theme_background_highContrast"
-                android:inputType="numberDecimal"
-                app:boxStrokeWidth="0dp"
-                app:boxStrokeWidthFocused="0dp" />
-        </com.google.android.material.textfield.TextInputLayout> -->
-
-        <!-- <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/notesTextInputLayout"
-            style="?attr/textInputFilledStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="Notes">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/notesTextInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        </com.google.android.material.textfield.TextInputLayout> -->
         <LinearLayout
             android:id="@+id/notesInputContainer"
             android:layout_width="match_parent"

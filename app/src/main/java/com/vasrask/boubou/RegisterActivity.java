@@ -76,7 +76,6 @@ public class RegisterActivity extends AppCompatActivity {
                     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
                     db.collection("users").document(firebaseUser.getUid()).set(user).addOnSuccessListener(v -> {
-                        // user was created
                         Log.d(TAG, "User was added to firebase");
                         Toast.makeText(this, "User created", Toast.LENGTH_SHORT).show();
                     }).addOnFailureListener(v -> {

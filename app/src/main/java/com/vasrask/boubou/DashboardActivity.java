@@ -47,7 +47,6 @@ public class DashboardActivity extends AppCompatActivity {
     private void logoutUser() {
         mAuth = FirebaseAuth.getInstance();
 
-        // log out from firebase and go to login page
         mAuth.signOut();
         startActivity(new Intent(DashboardActivity.this, LoginActivity.class));
         Toast.makeText(this, "Logged out", Toast.LENGTH_SHORT).show();
