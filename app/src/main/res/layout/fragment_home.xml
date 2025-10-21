@@ -10,20 +10,6 @@
     android:paddingEnd="20dp"
     android:paddingBottom="4dp">
 
-    <TextView
-        android:id="@+id/usernameTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawableStart="@drawable/account_circle_24px"
-        android:drawablePadding="15dp"
-        android:drawableTint="@color/md_theme_onPrimary"
-        android:textColor="@color/md_theme_onPrimary"
-        android:textSize="19sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <LinearLayout
         android:id="@+id/amountInputLayout"
         android:layout_width="match_parent"
@@ -33,16 +19,7 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/usernameTextView">
-
-        <TextView
-            android:id="@+id/welcome"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:text="@string/welcome"
-            android:textColor="@color/md_theme_onPrimary"
-            android:textSize="22sp" />
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -96,7 +73,6 @@
             app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
             app:startIconDrawable="@drawable/ic_time_24px">
 
-            
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editBabyActivityText"
                 android:layout_width="match_parent"

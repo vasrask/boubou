@@ -44,8 +44,6 @@ import java.util.Map;
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
-    private TextView usernameTextView;
-    private TextView welcomeMessage;
     private Button makeBabyActivityButton;
     private AutoCompleteTextView categoriesDropdown;
     private TextInputLayout categoriesMenu;
@@ -158,9 +156,7 @@ public class HomeFragment extends Fragment {
         recyclerView = view.findViewById(R.id.babyActivitiesRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-        usernameTextView = view.findViewById(R.id.usernameTextView);
         makeBabyActivityButton = view.findViewById(R.id.makeBabyActivityButton);
-        welcomeMessage = view.findViewById(R.id.welcome);
         dynamicInputContainer = view.findViewById(R.id.dynamicInputContainer);
         notesInputContainer = view.findViewById(R.id.notesInputContainer);
         categoriesMenu = view.findViewById(R.id.categoriesMenu);
@@ -188,11 +184,6 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        homeViewModel.getUserProfile().observe(getViewLifecycleOwner(), user -> {
-            usernameTextView.setText(user.getUsername());
-            welcomeMessage.setText("Welcome");
-            welcomeMessage.setTextColor(Color.CYAN);
-        });
 
         homeViewModel.getErrorLiveData().observe(getViewLifecycleOwner(), error -> {
             if (error != null) {
