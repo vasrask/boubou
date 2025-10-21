@@ -13,25 +13,31 @@ public class BabyActivity {
     private double duration;
     private boolean diaper_check;
     private boolean medicine_check;
-
     private double intake;
     private String category;
+    private String feeding_category;
     private String userId;
     private Timestamp timestamp;
     private String notes;
     private BabyActivityType babyActivityType;
-
+    private FeedingType feedingType;
     public BabyActivity() {}
 
-    public BabyActivity(String id, String userId, double amount, BabyActivityType category, String notes) {
+    public BabyActivity(String id, String userId, double amount, BabyActivityType category, FeedingType feedingType, String notes) {
         this.id = id;
         this.userId = userId;
         this.babyActivityType = category;
         this.category = category.name();
+        this.feedingType = feedingType;
+        this.feeding_category = feedingType.name();
         if (this.babyActivityType == BabyActivityType.SLEEP || this.babyActivityType == BabyActivityType.PLAYTIME) {
             this.duration = amount;
         } else if (this.babyActivityType == BabyActivityType.FEEDING) {
-            this.intake = amount;
+             if (this.feedingType == FeedingType.BREASTFEEDING) {
+                 this.duration = amount;
+             } else {
+                 this.intake = amount;
+             }
         }
         this.notes = notes;
         this.timestamp = null;
@@ -123,6 +129,14 @@ public class BabyActivity {
         this.category = category;
     }
 
+    public String getFeeding_category() {
+        return feeding_category;
+    }
+
+    public void setFeeding_category(String category) {
+        this.feeding_category = category;
+    }
+
     public BabyActivityType getBabyActivityType() {
         return babyActivityType;
     }
@@ -149,12 +163,18 @@ public class BabyActivity {
       switch (category) {
           case "SLEEP":
           case "PLAYTIME":
-              sb.append(", duration=").append(duration)
+              sb.append(", duration='").append(duration)
                       .append("m").append('\'');
               break;
           case "FEEDING":
-              sb.append(", intake=").append(intake)
-                      .append("ml").append('\'');
+              if (feeding_category.equals("BREASTFEEDING")) {
+                  sb.append(", duration='").append(duration)
+                          .append("m").append('\'');
+              } else {
+                  sb.append(", intake='").append(intake)
+                          .append("ml").append('\'');
+              }
+              sb.append(", feeding_category='").append(feeding_category).append('\'');
               break;
           case "DIAPER_CHANGE":
               if (diaper_check) {

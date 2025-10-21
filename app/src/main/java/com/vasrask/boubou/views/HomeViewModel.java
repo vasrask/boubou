@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModel;
 import com.google.firebase.firestore.SetOptions;
 import com.vasrask.boubou.entities.BabyActivityType;
 import com.vasrask.boubou.entities.BabyActivity;
-import com.vasrask.boubou.entities.BabyActivityType;
+import com.vasrask.boubou.entities.FeedingType;
 import com.vasrask.boubou.entities.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -127,7 +127,21 @@ public class HomeViewModel extends ViewModel {
                 return BabyActivityType.OTHER;
         }
     }
-    public void storeBabyActivity(double amount, boolean check, String selectedCategory, String notes) {
+    private FeedingType mapFeedingType(String category) {
+        if (category == null) return FeedingType.NO_FEEDING;
+
+        switch (category.toLowerCase().trim()) {
+            case "breastfeeding":
+                return FeedingType.BREASTFEEDING;
+            case "pumped breast milk":
+                return FeedingType.PUMPED_BREAST_MILK;
+            case "formula":
+                return FeedingType.FORMULA;
+            default:
+                return FeedingType.NO_FEEDING;
+        }
+    }
+    public void storeBabyActivity(double amount, boolean check, String selectedCategory, String feedingType, String notes) {
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
@@ -141,8 +155,9 @@ public class HomeViewModel extends ViewModel {
 
         userDocRef.get().addOnSuccessListener(documentSnapshot -> {
         BabyActivity babyActivity;
-        if (amount != 0) {
-            babyActivity = new BabyActivity(UUID.randomUUID().toString(), currentUser.getUid(), amount, mapBabyActivityType(selectedCategory), notes);
+        Log.d("SpinnerDebugg", String.format("amount %f", amount));
+            if (amount != 0) {
+            babyActivity = new BabyActivity(UUID.randomUUID().toString(), currentUser.getUid(), amount, mapBabyActivityType(selectedCategory), mapFeedingType(feedingType), notes);
         } else {
             babyActivity = new BabyActivity(UUID.randomUUID().toString(), currentUser.getUid(), check, mapBabyActivityType(selectedCategory), notes);
         }
@@ -156,7 +171,13 @@ public class HomeViewModel extends ViewModel {
                     txMap.put("duration", babyActivity.getDuration());
                     break;
                 case "FEEDING":
-                    txMap.put("intake", babyActivity.getIntake());
+                    if (feedingType.equals("Breastfeeding")) {
+                        txMap.put("feeding_category", feedingType);
+                        txMap.put("duration", babyActivity.getDuration());
+                    } else {
+                        txMap.put("intake", babyActivity.getIntake());
+                        txMap.put("feeding_category", feedingType);
+                    }
                     break;
                 case "DIAPER_CHANGE":
                     txMap.put("diaper_check", babyActivity.getDiaper_check());

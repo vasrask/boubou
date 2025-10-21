@@ -15,6 +15,7 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.WriteBatch;
+import com.vasrask.boubou.entities.FeedingType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -58,7 +59,20 @@ public class BabyActivityRepository {
                 return BabyActivityType.OTHER;
         }
     }
+    private FeedingType mapFeedingType(String category) {
+        if (category == null) return FeedingType.NO_FEEDING;
 
+        switch (category.toLowerCase().trim()) {
+            case "Breastfeeding":
+                return FeedingType.BREASTFEEDING;
+            case "Pumped Breast Milk":
+                return FeedingType.PUMPED_BREAST_MILK;
+            case "Formula":
+                return FeedingType.FORMULA;
+            default:
+                return FeedingType.NO_FEEDING;
+        }
+    }
 
     public Task<List<BabyActivity>> getBabyActivities(int limit, String field) {
 
@@ -139,7 +153,7 @@ public class BabyActivityRepository {
         });
     }
 
-    public Task<Void> storeBabyActivity(double amount, boolean check, String selectedCategory, String notes) {
+    public Task<Void> storeBabyActivity(double amount, boolean check, String selectedCategory, String feedingType, String notes) {
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
@@ -162,7 +176,7 @@ public class BabyActivityRepository {
             DocumentSnapshot document = task.getResult();
             BabyActivity babyActivity;
             if (amount > 0) {
-                babyActivity = new BabyActivity(UUID.randomUUID().toString(), userId, amount, mapBabyActivityType(selectedCategory), notes);
+                babyActivity = new BabyActivity(UUID.randomUUID().toString(), userId, amount, mapBabyActivityType(selectedCategory), mapFeedingType(feedingType), notes);
             } else {
                 babyActivity = new BabyActivity(UUID.randomUUID().toString(), userId, check, mapBabyActivityType(selectedCategory), notes);
             }

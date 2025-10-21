@@ -51,6 +51,11 @@
         <item>Date ↑</item>
         <item>Date ↓</item>
     </string-array>
+    <string-array name="feeding_types_array">
+        <item>Breastfeeding</item>
+        <item>Formula</item>
+        <item>Pumped Breast Milk</item>
+    </string-array>
     <string-array name="duration_units">
         <item>Minutes</item>
         <item>Hours</item>

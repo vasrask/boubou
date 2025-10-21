@@ -129,6 +129,19 @@ public class BabyActivityAdapter extends RecyclerView.Adapter<BabyActivityAdapte
         return new BabyActivityViewHolder(view);
     }
 
+    private String formatDuration(double totalMinutes) {
+        @SuppressLint("DefaultLocale") String formattedDuration;
+        int hours = (int) totalMinutes / 60;
+        int minutes = (int) totalMinutes % 60;
+        if (hours > 0 && minutes > 0) {
+            formattedDuration = String.format("%dh%02dm", hours, minutes);
+        } else if (hours > 0) {
+            formattedDuration = String.format("%dh", hours);
+        } else {
+            formattedDuration = String.format("%dm", minutes);
+        }
+                return formattedDuration;
+    }
     @Override
     public void onBindViewHolder(@NonNull BabyActivityAdapter.BabyActivityViewHolder viewHolder, int position) {
 
@@ -164,36 +177,28 @@ public class BabyActivityAdapter extends RecyclerView.Adapter<BabyActivityAdapte
                 }
         });
         String category = babyActivity.getCategory().trim();
-        viewHolder.textView.setText(category);
 
         viewHolder.notesTextView.setText(babyActivity.getNotes());
 
         int color = Color.MAGENTA;
 
         if (category.equals("SLEEP") || category.equals("PLAYTIME")) {
-
-            double totalMinutes = babyActivity.getDuration();
-            int hours = (int) (totalMinutes / 60);
-            int minutes = (int) totalMinutes % 60;
-
-            @SuppressLint("DefaultLocale") String formattedDuration;
-            if (hours > 0 && minutes > 0) {
-                formattedDuration = String.format("%dh%02dm", hours, minutes);
-            } else if (hours > 0) {
-                formattedDuration = String.format("%dh", hours);
-            } else {
-                formattedDuration = String.format("%dm", minutes);
-            }
-
-            viewHolder.amountView.setText(formattedDuration);
+            viewHolder.textView.setText(category);
+            viewHolder.amountView.setText(formatDuration(babyActivity.getDuration()));
             viewHolder.amountView.setTextColor(color);
         } else if (category.equals("FEEDING")) {
-            double intake = babyActivity.getIntake();
-            @SuppressLint("DefaultLocale") String formattedIntake;
-            formattedIntake = String.format("%dml",  (int) intake);
-
-            viewHolder.amountView.setText(formattedIntake);
-            viewHolder.amountView.setTextColor(color);
+            String feedingCategory = babyActivity.getFeeding_category().trim();
+            viewHolder.textView.setText(category + ": " + feedingCategory);
+            if (feedingCategory.equals("Breastfeeding")) {
+                viewHolder.amountView.setText(formatDuration(babyActivity.getDuration()));
+                viewHolder.amountView.setTextColor(color);
+            } else {
+                double intake = babyActivity.getIntake();
+                @SuppressLint("DefaultLocale") String formattedIntake;
+                formattedIntake = String.format("%dml", (int) intake);
+                viewHolder.amountView.setText(formattedIntake);
+                viewHolder.amountView.setTextColor(color);
+            }
         } else if (category.equals("DIAPER_CHANGE")) {
             @SuppressLint("DefaultLocale") String Check;
             if (babyActivity.getDiaper_check()) {
