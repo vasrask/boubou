@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Boubou</string>
+    <string name="profile">Προφίλ</string>
+    <string name="add">Προσθήκη</string>
+    <string name="baby_activities">Οι δραστηριότητες του μωρού σας</string>
+    <string name="baby_activities_last">Σημερινές Δραστηριότητες</string>
+    <string name="home">Αρχική</string>
+    <string name="back">Πίσω</string>
+    <string name="more">Περισσότερα</string>
+    <string name="username">Όνομα χρήστη</string>
+    <string name="email">Email</string>
+    <string name="password">Κωδικός πρόσβασης</string>
+    <string name="login">Σύνδεση</string>
+    <string name="login_prompt">Έχετε ήδη λογαριασμό; Συνδεθείτε</string>
+    <string name="register">Εγγραφή</string>
+    <string name="register_prompt">Δεν έχετε λογαριασμό; Κάντε εγγραφή</string>
+    <string name="background">Φόντο</string>
+    <string name="logout">Έξοδος</string>
+    <string name="default_web_client_id">952737007529-j3nncm97589v3kig3nu4mtt9dh41n1dn.apps.googleusercontent.com</string>
+    <string name="duration">Διάρκεια</string>
+    <string name="minutes">λεπτά</string>
+    <string name="hours">ώρες</string>
+    <string name="baby_activity">Δραστηριότητα Μωρού</string>
+    <string name="add_baby_activity">Προσθέστε δραστηριότητα μωρού</string>
+    <string name="sleep">Ύπνος</string>
+    <string name="feeding">Γεύμα</string>
+    <string name="intake">Δοσολογία</string>
+    <string name="diaper_change">Αλλαγή πάνας</string>
+    <string name="diaper_change_question">Άλλαξε το μωρό πάνα;</string>
+    <string name="medicine">Φάρμακα</string>
+    <string name="medicine_question">Πήρε το μωρό φάρμακο;</string>
+    <string name="playtime">Παιχνίδι</string>
+    <string name="other">Άλλο</string>
+    <string name="notes">Σημειώσεις</string>
+    <string name="login_title">Συνδεθείτε με το λογαριασμό σας</string>
+    <string name="login_fail">Η σύνδεση απέτυχε</string>
+    <string name="username_required">Απαιτείται όνομα χρήστη</string>
+    <string name="password_required">Απαιτείται κωδικός πρόσβασης</string>
+    <string name="email_required">Απαιτείται email</string>
+    <string name="invalid_credentials">Μη έγκυρα αναγνωριστικά</string>
+    <string name="password_restriction">Ο κωδικός πρόσβασης πρέπει να έχει τουλάχιστον 5 χαρακτήρες</string>
+    <string name="user_created">Ο χρήστης δημιουργήθηκε επιτυχώς</string>
+    <string name="user_not_created">Ο χρήστης δεν δημιουργήθηκε</string>
+    <string name="registration_failed">Η εγγραφή απέτυχε</string>
+    <string name="invalid_user">Μη έγκυρος χρήστης</string>
+    <string name="edit_your_profile">Επεξεργαστείτε το προφίλ σας</string>
+    <string name="select_category">Επιλέξτε κατηγορία</string>
+    <string name="filter_by_type">Φίλτρο</string>
+    <string name="sort_by">Ταξινόμηση με</string>
+    <string name="profile_image">Εικόνα προφίλ</string>
+    <string name="upload_image">Ανεβάστε εικόνα</string>
+    <string name="save_changes">Αποθήκευση αλλαγών</string>
+    <string name="scroll_to_top">Κύλιση στην αρχή</string>
+    <string name="delete_baby_activity">Διαγράψτε την δραστηριότητα του μωρού</string>
+    <string name="confirm_delete">Είστε σίγουροι ότι θέλετε να διαγράψετε αυτή την δραστηριότητα&#63;</string>
+    <string name="delete">Διαγραφή</string>
+    <string name="successful_delete">Διαγράφηκε επιτυχώς</string>
+    <string name="failed_delete">Η διαγραφή απέτυχε</string>
+    <string name="cancel">Ακύρωση</string>
+    <string name="select_language">Επιλέξτε γλώσσα</string>
+    <string-array name="categories_array">
+        <item>Ύπνος</item>
+        <item>Γεύμα</item>
+        <item>Αλλαγή πάνας</item>
+        <item>Φάρμακα</item>
+        <item>Παιχνίδι</item>
+        <item>Άλλο</item>
+    </string-array>
+    <string-array name="sort_array">
+        <item>Ύπνος</item>
+        <item>Γεύμα</item>
+        <item>Αλλαγή πάνας</item>
+        <item>Φάρμακα</item>
+        <item>Παιχνίδι</item>
+        <item>Ημερομηνία ↑</item>
+        <item>Ημερομηνία ↓</item>
+    </string-array>
+    <string-array name="feeding_types_array">
+        <item>Θηλασμός</item>
+        <item>Γάλα Σκόνη</item>
+        <item>Θήλαστρο</item>
+    </string-array>
+    <string name="breastfeeding">Θηλασμός</string>
+    <string name="pumped_breast_milk">Θήλαστρο</string>
+    <string name="formula">Γάλα Σκόνη</string>
+    <string name="no_feeding">Δεν είναι γεύμα</string>
+</resources>

@@ -1,29 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Boubou</string>
     <string name="profile">Profile</string>
     <string name="add">Add</string>
     <string name="baby_activities">Your Baby Activities</string>
-    <string name="baby_activities_last">Baby Activities (Last 20)</string>
+    <string name="baby_activities_last">Today\'s Activities</string>
     <string name="home">Home</string>
     <string name="back">Back</string>
     <string name="more">More</string>
     <string name="username">Username</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
-    <string name="login">Already have an account? Login</string>
+    <string name="login">Login</string>
+    <string name="login_prompt">Already have an account? Login</string>
+    <string name="register">Register</string>
+    <string name="register_prompt">Don\'t have an account? Register</string>
     <string name="background">Background image</string>
     <string name="logout">Logout</string>
     <string name="default_web_client_id">952737007529-j3nncm97589v3kig3nu4mtt9dh41n1dn.apps.googleusercontent.com</string>
     <string name="duration">Duration</string>
+    <string name="minutes">minutes</string>
+    <string name="hours">hours</string>
     <string name="baby_activity">Baby Activity</string>
     <string name="add_baby_activity">Add baby activity</string>
     <string name="sleep">Sleep</string>
     <string name="feeding">Feeding</string>
-    <string name="diaperChange">Diaper Change</string>
+    <string name="intake">Intake</string>
+    <string name="diaper_change">Diaper Change</string>
+    <string name="diaper_change_question">Did baby change diaper?</string>
     <string name="medicine">Medicine</string>
+    <string name="medicine_question">Did baby take medicine?</string>
     <string name="playtime">Playtime</string>
     <string name="other">Other</string>
+    <string name="notes">Notes</string>
     <string name="login_title">Login with your account</string>
+    <string name="login_fail">Login failed</string>
+    <string name="username_required">Username is required</string>
+    <string name="password_required">Password is required</string>
+    <string name="email_required">Email is required</string>
+    <string name="invalid_credentials">Invalid credentials</string>
+    <string name="password_restriction">Password must be at least 5 characters</string>
+    <string name="user_created">User created successfully</string>
+    <string name="user_not_created">User was not created</string>
+    <string name="registration_failed">Registration failed</string>
+    <string name="invalid_user">Invalid user</string>
     <string name="edit_your_profile">Edit your profile</string>
     <string name="select_category">Select category</string>
     <string name="filter_by_type">Filter by</string>
@@ -33,6 +53,12 @@
     <string name="save_changes">Save Changes</string>
     <string name="scroll_to_top">Scroll to top</string>
     <string name="delete_baby_activity">Delete baby activity</string>
+    <string name="confirm_delete">Are you sure you want to delete this baby activity?</string>
+    <string name="delete">Delete</string>
+    <string name="successful_delete">Deleted successfully</string>
+    <string name="failed_delete">Delete failed</string>
+    <string name="cancel">Cancel</string>
+    <string name="select_language">Select Language</string>
     <string-array name="categories_array">
         <item>Sleep</item>
         <item>Feeding</item>
@@ -55,8 +81,8 @@
         <item>Formula</item>
         <item>Pumped Breast Milk</item>
     </string-array>
-    <string-array name="duration_units">
-        <item>Minutes</item>
-        <item>Hours</item>
-    </string-array>
+    <string name="breastfeeding">Breastfeeding</string>
+    <string name="pumped_breast_milk">Pumped Breast Milk</string>
+    <string name="formula">Formula</string>
+    <string name="no_feeding">Not a feeding</string>
 </resources>

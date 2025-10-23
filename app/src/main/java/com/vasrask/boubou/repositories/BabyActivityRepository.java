@@ -41,39 +41,6 @@ public class BabyActivityRepository {
     }
 
 
-    private BabyActivityType mapBabyActivityType(String category) {
-        if (category == null) return BabyActivityType.OTHER;
-
-        switch (category.toLowerCase().trim()) {
-            case "sleep":
-                return BabyActivityType.SLEEP;
-            case "feeding":
-                return BabyActivityType.FEEDING;
-            case "diaperChange":
-                return BabyActivityType.DIAPER_CHANGE;
-            case "medicine":
-                return BabyActivityType.MEDICINE;
-            case "playtime":
-                return BabyActivityType.PLAYTIME;
-            default:
-                return BabyActivityType.OTHER;
-        }
-    }
-    private FeedingType mapFeedingType(String category) {
-        if (category == null) return FeedingType.NO_FEEDING;
-
-        switch (category.toLowerCase().trim()) {
-            case "Breastfeeding":
-                return FeedingType.BREASTFEEDING;
-            case "Pumped Breast Milk":
-                return FeedingType.PUMPED_BREAST_MILK;
-            case "Formula":
-                return FeedingType.FORMULA;
-            default:
-                return FeedingType.NO_FEEDING;
-        }
-    }
-
     public Task<List<BabyActivity>> getBabyActivities(int limit, String field) {
 
         Query query = BabyActivitiesRef.orderBy(field, Query.Direction.DESCENDING);
@@ -102,7 +69,7 @@ public class BabyActivityRepository {
             return Tasks.forException(new Exception("User not logged in"));
         }
 
-        return db.collection("users").document(currentUser.getUid()).collection("babyActivities").whereEqualTo("category", category.toUpperCase().trim()).orderBy("timestamp", Query.Direction.DESCENDING).get().continueWith(task -> {
+        return db.collection("users").document(currentUser.getUid()).collection("babyActivities").whereEqualTo("baby_activity_type", category.toUpperCase().trim()).orderBy("timestamp", Query.Direction.DESCENDING).get().continueWith(task -> {
             if (task.isSuccessful()) {
                 List<BabyActivity> BabyActivities = new ArrayList<>();
                 for (DocumentSnapshot doc : task.getResult()) {
@@ -126,7 +93,7 @@ public class BabyActivityRepository {
             return Tasks.forException(new Exception("User not logged in"));
         }
 
-        List<String> validFields = Arrays.asList("duration", "timestamp", "category");
+        List<String> validFields = Arrays.asList("duration", "timestamp", "baby_activity_type");
 
         if (!validFields.contains(field)) {
             field = "timestamp";
@@ -153,7 +120,7 @@ public class BabyActivityRepository {
         });
     }
 
-    public Task<Void> storeBabyActivity(double amount, boolean check, String selectedCategory, String feedingType, String notes) {
+    public Task<Void> storeBabyActivity(double amount, boolean check, BabyActivityType selectedCategory, FeedingType feedingType, String notes) {
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
@@ -176,9 +143,9 @@ public class BabyActivityRepository {
             DocumentSnapshot document = task.getResult();
             BabyActivity babyActivity;
             if (amount > 0) {
-                babyActivity = new BabyActivity(UUID.randomUUID().toString(), userId, amount, mapBabyActivityType(selectedCategory), mapFeedingType(feedingType), notes);
+                babyActivity = new BabyActivity(UUID.randomUUID().toString(), userId, amount, selectedCategory, feedingType, notes);
             } else {
-                babyActivity = new BabyActivity(UUID.randomUUID().toString(), userId, check, mapBabyActivityType(selectedCategory), notes);
+                babyActivity = new BabyActivity(UUID.randomUUID().toString(), userId, check, selectedCategory, notes);
             }
             WriteBatch batch = db.batch();
 
@@ -186,19 +153,19 @@ public class BabyActivityRepository {
             Map<String, Object> txMap = new HashMap<>();
             txMap.put("id", babyActivity.getId());
             txMap.put("userId", userId);
-            txMap.put("category", babyActivity.getCategory());
-            switch (babyActivity.getCategory()){
-                case "SLEEP":
-                case "PLAYTIME":
+            txMap.put("baby_activity_type", babyActivity.getBaby_activity_type());
+            switch (babyActivity.getBaby_activity_type()){
+                case SLEEP:
+                case PLAYTIME:
                     txMap.put("duration", babyActivity.getDuration());
                     break;
-                case "FEEDING":
+                case FEEDING:
                     txMap.put("intake", babyActivity.getIntake());
                     break;
-                case "DIAPER_CHANGE":
+                case DIAPER_CHANGE:
                     txMap.put("diaper_check", babyActivity.getDiaper_check());
                     break;
-                case "MEDICINE":
+                case MEDICINE:
                     txMap.put("medicine_check", babyActivity.getMedicine_check());
                     break;
                 default:

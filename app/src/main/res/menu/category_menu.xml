@@ -8,7 +8,7 @@
         android:title="@string/feeding" />
     <item
         android:id="@+id/diaperChange"
-        android:title="@string/diaperChange" />
+        android:title="@string/diaper_change" />
     <item
         android:id="@+id/medicine"
         android:title="@string/medicine" />

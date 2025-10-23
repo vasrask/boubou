@@ -69,14 +69,37 @@
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/languageMenu"
+        style="?attr/textInputFilledStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/select_language"
+        app:layout_constraintTop_toBottomOf="@id/editPasswordLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:endIconMode="dropdown_menu"
+        android:layout_marginTop="16dp">
+
+        <AutoCompleteTextView
+            android:id="@+id/languageDropdown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none"
+                    android:focusable="false"
+        android:cursorVisible="false"
+        android:padding="8dp"
+        android:textSize="16sp"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
     <!-- Register Button -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/registerBtn"
         style="@style/Widget.Material3.Button.TonalButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Register"
-        app:layout_constraintTop_toBottomOf="@id/editPasswordLayout"
+        android:text="@string/register"
+        app:layout_constraintTop_toBottomOf="@id/languageMenu"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="24dp" />
@@ -87,7 +110,7 @@
         style="@style/Widget.Material3.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/login"
+        android:text="@string/login_prompt"
         app:layout_constraintTop_toBottomOf="@id/registerBtn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

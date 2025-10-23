@@ -8,11 +8,13 @@ import android.os.Looper;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.vasrask.boubou.utils.LocaleHelper;
 
 @SuppressLint("CustomSplashScreen")
 public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        LocaleHelper.applySavedLocale(this);
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_splash);
@@ -20,6 +22,7 @@ public class SplashActivity extends AppCompatActivity {
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
 
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
             Intent intent;
 
             if (user != null) {

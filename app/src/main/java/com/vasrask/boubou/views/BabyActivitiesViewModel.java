@@ -147,7 +147,7 @@ public class BabyActivitiesViewModel extends ViewModel {
         Log.d(TAG, "Type is " + type);
 
         Query query = db.collection("users").document(currentUser.getUid()).collection("babyActivities")
-                .whereEqualTo("category", type.toUpperCase().trim());
+                .whereEqualTo("baby_activity_type", type);
 
 
         query.get().addOnSuccessListener(queryDocumentSnapshots -> {

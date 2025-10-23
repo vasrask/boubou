@@ -2,11 +2,9 @@ package com.vasrask.boubou.fragments;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.graphics.Color;
 import android.graphics.Insets;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +16,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,12 +29,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.vasrask.boubou.R;
 import com.vasrask.boubou.BabyActivityAdapter;
+import com.vasrask.boubou.entities.BabyActivityType;
+import com.vasrask.boubou.entities.FeedingType;
 import com.vasrask.boubou.views.HomeViewModel;
 import com.google.android.material.materialswitch.MaterialSwitch;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -66,7 +64,7 @@ public class HomeFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
-        babyActivityAdapter = new BabyActivityAdapter();
+        babyActivityAdapter = new BabyActivityAdapter(requireContext());
     }
 
     @SuppressLint("WrongConstant")
@@ -92,8 +90,8 @@ public class HomeFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         categoriesDropdown.setOnItemClickListener((parent, _view, position, id) -> {
-            String selectedCategory = (String) parent.getItemAtPosition(position);
-            updateActivityInputField(selectedCategory);
+            String selectedCategory = parent.getItemAtPosition(position).toString();
+            updateActivityInputField(BabyActivityType.fromString(selectedCategory));
         });
 
         ViewCompat.setOnApplyWindowInsetsListener(rootLayout, new OnApplyWindowInsetsListener() {
@@ -194,23 +192,23 @@ public class HomeFragment extends Fragment {
         babyActivityAdapter.setOnDeleteListener(babyActivity -> {
             new AlertDialog.Builder(requireContext())
                     .setTitle("Delete babyActivity")
-                    .setMessage("Are you sure you want to delete this babyActivity ?")
-                    .setPositiveButton("Delete", (dialog, which) -> {
+                    .setMessage(getString(R.string.confirm_delete))
+                    .setPositiveButton(getString(R.string.delete), (dialog, which) -> {
                         homeViewModel.deleteBabyActivity(babyActivity.getId())
                                 .observe(getViewLifecycleOwner(), success -> {
                                     if (success) {
-                                        Toast.makeText(requireContext(), "Deleted successfully", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(requireContext(), getString(R.string.successful_delete), Toast.LENGTH_SHORT).show();
                                     } else {
-                                        Toast.makeText(requireContext(), "Delete failed", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(requireContext(), getString(R.string.failed_delete), Toast.LENGTH_SHORT).show();
                                     }
                                 });
                     })
-                    .setNegativeButton("Cancel", null)
+                    .setNegativeButton(getString(R.string.cancel), null)
                     .show();
         });
     }
 
-    private void updateActivityInputField(String category) {
+    private void updateActivityInputField(BabyActivityType category) {
         dynamicInputContainer.removeAllViews();
         notesInputContainer.removeAllViews();
         dynamicInputContainer = requireView().findViewById(R.id.dynamicInputContainer);
@@ -218,18 +216,18 @@ public class HomeFragment extends Fragment {
         notesInputContainer.removeAllViews();
 
         LayoutInflater inflater = LayoutInflater.from(requireContext());
-        activeCategory = category;
+        activeCategory = getString(category.getId());
 
 
         switch (category) {
-            case "Sleep":
-            case "Playtime":
+            case SLEEP:
+            case PLAYTIME:
                 TextInputLayout activityTextInputLayout = (TextInputLayout) inflater.inflate(R.layout.input_metric_layout, dynamicInputContainer, false);
-                activityTextInputLayout.setHint("Duration (hours)");
+                activityTextInputLayout.setHint(getString(R.string.duration) + " (" + getString(R.string.hours) +")");
                 dynamicInputContainer.addView(activityTextInputLayout);
                 activeInputView = activityTextInputLayout.findViewById(R.id.metricInput);
                 break;
-            case "Feeding":
+            case FEEDING:
                 Spinner feedingTypeDropdown = new Spinner(requireContext());
                 ArrayAdapter<CharSequence> feedingAdapter = ArrayAdapter.createFromResource(
                         requireContext(),
@@ -239,11 +237,10 @@ public class HomeFragment extends Fragment {
                 feedingAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 feedingTypeDropdown.setAdapter(feedingAdapter);
                 dynamicInputContainer.addView(feedingTypeDropdown);
-               feedingTypeDropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                feedingTypeDropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                    @Override
                    public void onItemSelected(AdapterView<?> parent, View _view, int position, long id) {
-                       String selectedFeedingType = parent.getItemAtPosition(position).toString();
-                       feedingActiveType = selectedFeedingType;
+                       feedingActiveType = parent.getItemAtPosition(position).toString();
                       if (dynamicInputContainer.getChildCount() > 1) {
                            dynamicInputContainer.removeViewAt(1);
                        }
@@ -252,10 +249,10 @@ public class HomeFragment extends Fragment {
                        TextInputLayout feedingTextinputLayout = (TextInputLayout) inflater2.inflate(
                                R.layout.input_metric_layout, dynamicInputContainer, false);
 
-                       if (selectedFeedingType.equals("Breastfeeding")) {
-                           feedingTextinputLayout.setHint("Duration (minutes)");
+                       if (feedingActiveType.equals(getString(R.string.breastfeeding))) {
+                           feedingTextinputLayout.setHint(getString(R.string.duration) + " (" + getString(R.string.minutes) +")");
                        } else {
-                           feedingTextinputLayout.setHint("Intake (ml)");
+                           feedingTextinputLayout.setHint(getString(R.string.intake) + " (ml)");
                        }
 
                        dynamicInputContainer.addView(feedingTextinputLayout);
@@ -268,77 +265,80 @@ public class HomeFragment extends Fragment {
                    }
                });
                 break;
-            case "Diaper Change":
+            case DIAPER_CHANGE:
                 MaterialSwitch diaperSwitch = new MaterialSwitch(requireContext());
-                diaperSwitch.setText("Did baby change diaper?");
+                diaperSwitch.setText(getString(R.string.diaper_change_question));
                 dynamicInputContainer.addView(diaperSwitch);
                 activeInputView = diaperSwitch;
                 break;
-            case "Medicine":
+            case MEDICINE:
                 MaterialSwitch medicineSwitch = new MaterialSwitch(requireContext());
-                medicineSwitch.setText("Did baby take medicine?");
+                medicineSwitch.setText(getString(R.string.medicine_question));
                 dynamicInputContainer.addView(medicineSwitch);
                 activeInputView = medicineSwitch;
                 break;
             default:
                 TextInputLayout otherTextInputLayout = (TextInputLayout) inflater.inflate(R.layout.input_metric_layout, dynamicInputContainer, false);
-                otherTextInputLayout.setHint("Other");
+                otherTextInputLayout.setHint(getString(R.string.other));
                 dynamicInputContainer.addView(otherTextInputLayout);
                 activeInputView = otherTextInputLayout.findViewById(R.id.metricInput);
                 break;
         }
         TextInputLayout notesLayout = (TextInputLayout) inflater.inflate(
                 R.layout.input_notes_layout, notesInputContainer, false);
-        notesLayout.setHint("Notes");
+        notesLayout.setHint(getString(R.string.notes));
         notesInputContainer.addView(notesLayout);
         notesTextInput = notesLayout.findViewById(R.id.notesEditText);
     }
     private void onSubmitBabyActivity() {
 
-        String selectedCategory = activeCategory;
+
+        BabyActivityType selectedCategory = BabyActivityType.fromString(activeCategory);
         if (selectedCategory == null || activeInputView == null) {
             Toast.makeText(requireContext(), "Please select an activity.", Toast.LENGTH_SHORT).show();
             return;
         }
         String notes = notesTextInput.getText().toString();
 
-        String feedingType = feedingActiveType;
         Map<String, Object> activityData = new HashMap<>();
-        activityData.put("category", selectedCategory);
-        if (!feedingType.isEmpty()) {
-            activityData.put("feeding_category", feedingType);
+        activityData.put("baby_activity_type", selectedCategory);
+        FeedingType selectedFeedingType = FeedingType.fromString(feedingActiveType);
+
+        if (selectedFeedingType != null) {
+            activityData.put("feeding_type", selectedFeedingType);
         }
         activityData.put("notes", notes);
         activityData.put("timestamp", System.currentTimeMillis());
 
         switch (selectedCategory) {
-            case "Sleep":
-            case "Playtime":
+            case SLEEP:
+            case PLAYTIME:
                 double duration = getDurationInMinutes();
                 activityData.put("amount", duration);
                 activityData.put("unit", "minutes");
-                homeViewModel.storeBabyActivity(duration, false, selectedCategory, "", notes);
+                homeViewModel.storeBabyActivity(duration, false, selectedCategory, FeedingType.NO_FEEDING, notes);
                 break;
-            case "Feeding":
-                if (feedingType.equals("Pumped Breast Milk") || feedingType.equals("Formula")) {
+            case FEEDING:
+                if (selectedFeedingType == FeedingType.PUMPED_BREAST_MILK|| selectedFeedingType == FeedingType.FORMULA) {
                     double intake = Double.parseDouble(((TextInputEditText) activeInputView).getText().toString().trim());
                     activityData.put("amount", intake);
                     activityData.put("unit", "ml");
-                    homeViewModel.storeBabyActivity(intake, false, selectedCategory, feedingType, notes);
-                } else if (feedingType.equals("Breastfeeding")) {
+                    homeViewModel.storeBabyActivity(intake, false, selectedCategory, selectedFeedingType, notes);
+                } else if (selectedFeedingType == FeedingType.BREASTFEEDING) {
                     double feeding_duration = Double.parseDouble(((TextInputEditText) activeInputView).getText().toString().trim());
                     activityData.put("amount", feeding_duration);
                     activityData.put("unit", "m");
-                    homeViewModel.storeBabyActivity(feeding_duration, false, selectedCategory, feedingType, notes);
+                    Log.d("FEEDING", "here");
+                    homeViewModel.storeBabyActivity(feeding_duration, false, selectedCategory, selectedFeedingType, notes);
                 }
                 break;
-            case "Diaper Change":
-            case "Medicine":
+            case DIAPER_CHANGE:
+            case MEDICINE:
                 if (dynamicInputContainer.getChildCount() > 0) {
                     MaterialSwitch checkSwitch = (MaterialSwitch) dynamicInputContainer.getChildAt(0);
                     activityData.put("check", checkSwitch.isChecked());
                 }
-                homeViewModel.storeBabyActivity(0, true, selectedCategory, "", notes);
+                homeViewModel.storeBabyActivity(0, true, selectedCategory, FeedingType.NO_FEEDING, notes);
                 break;
         }
         notesTextInput.setText("");

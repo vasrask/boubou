@@ -1,7 +1,10 @@
 package com.vasrask.boubou;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -9,6 +12,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.vasrask.boubou.entities.User;
+import com.vasrask.boubou.utils.LocaleHelper;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -22,6 +26,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        LocaleHelper.applySavedLocale(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -39,12 +44,7 @@ public class LoginActivity extends AppCompatActivity {
                     String password = passwordInput.getText().toString();
 
                     mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
-                            finish();
-                        } else {
-                            Toast.makeText(this, "Login failed", Toast.LENGTH_SHORT).show();
-                        }
+                        handleLogin();
                     });
                 });
 
@@ -58,11 +58,11 @@ public class LoginActivity extends AppCompatActivity {
         String password = passwordInput.getText().toString().trim();
 
         if (email.isEmpty()) {
-            emailInput.setError("Email is required");
+            emailInput.setError(getString(R.string.email_required));
             return;
         }
         if (password.isEmpty()) {
-            passwordInput.setError("Password is required");
+            passwordInput.setError(getString(R.string.password_required));
             return;
         }
 
@@ -75,15 +75,25 @@ public class LoginActivity extends AppCompatActivity {
                 db.collection("users").document(firebaseUser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
                         User user = documentSnapshot.toObject(User.class);
+                        String languageCode = documentSnapshot.getString("language_code");
+                        Log.d("LANGUAGE", "language_code " + languageCode);
+                        if(languageCode != null) {
+                            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                            prefs.edit().putString("app_lang", languageCode).apply();
+                            Log.d("LANGUAGE", "app_lang" + prefs.getString("app_lang", "none"));
+                            LocaleHelper.applySavedLocale(this);
+                        }
                     } else {
-                        Toast.makeText(this, "Invalid credentials", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, getString(R.string.invalid_credentials), Toast.LENGTH_SHORT).show();
                     }
                 });
+
+            startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
+            finish();
+            } else {
+                Toast.makeText(this, getString(R.string.login_fail), Toast.LENGTH_SHORT).show();
             }
         });
-
-
-
 
     }
 }

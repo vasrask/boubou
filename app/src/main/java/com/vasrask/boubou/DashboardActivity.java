@@ -14,6 +14,9 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.vasrask.boubou.entities.BabyActivityType;
+import com.vasrask.boubou.entities.FeedingType;
+import com.vasrask.boubou.utils.LocaleHelper;
 
 import java.util.Objects;
 
@@ -26,13 +29,15 @@ public class DashboardActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        LocaleHelper.applySavedLocale(this);
+        BabyActivityType.init(this);
+        FeedingType.init(this);
         setContentView(R.layout.activity_dashboard);
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host);
         NavController navController = navHostFragment.getNavController();
 
-        Objects.requireNonNull(getSupportActionBar()).setTitle("Boubou");
+        Objects.requireNonNull(getSupportActionBar()).setTitle(getString(R.string.app_name));
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);

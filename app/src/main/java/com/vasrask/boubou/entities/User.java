@@ -10,20 +10,23 @@ public class User {
     private String username;
     private String email;
     private Map<String, BabyActivity> babyActivites;
+    private String languageCode;
     public User() {}
 
 
-    public User(String id, String username, String email) {
+    public User(String id, String username, String email, String languageCode) {
         this.id = id;
         this.username = username;
         this.email = email;
+        this.languageCode = languageCode;
     }
 
-    public User(String id, String username, String email, Map<String, BabyActivity> babyActivities) {
+    public User(String id, String username, String email, Map<String, BabyActivity> babyActivities, String languageCode) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.babyActivites = babyActivities;
+        this.languageCode = languageCode;
     }
 
     public String getId() {
@@ -50,6 +53,13 @@ public class User {
         this.email = email;
     }
 
+    public String getLanguage_code() {
+        return languageCode;
+    }
+
+    public void setLanguage_code(String languageCode) {
+        this.languageCode = languageCode;
+    }
     public Map<String, BabyActivity> getBabyActivites() {
         return babyActivites;
     }

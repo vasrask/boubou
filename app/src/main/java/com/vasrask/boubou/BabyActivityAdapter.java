@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.vasrask.boubou.entities.BabyActivity;
@@ -28,12 +29,16 @@ public class BabyActivityAdapter extends RecyclerView.Adapter<BabyActivityAdapte
         void onDeleteClick(BabyActivity babyActivity);
     }
 
+    private final Context context;
+
     private List<BabyActivity> babyActivities;
 
     private OnDeleteListener onDeleteListener;
 
-    public BabyActivityAdapter() {
+    public BabyActivityAdapter(Context context) {
+
         this.babyActivities = new ArrayList<>();
+        this.context = context;
     }
 
     public void setOnDeleteListener(OnDeleteListener listener) {
@@ -176,20 +181,19 @@ public class BabyActivityAdapter extends RecyclerView.Adapter<BabyActivityAdapte
                     onDeleteListener.onDeleteClick(babyActivity);
                 }
         });
-        String category = babyActivity.getCategory().trim();
+        String category = babyActivity.getBabyActivityTypeString(context);
 
         viewHolder.notesTextView.setText(babyActivity.getNotes());
 
         int color = Color.MAGENTA;
-
-        if (category.equals("SLEEP") || category.equals("PLAYTIME")) {
+        if (category.equals(context.getString(R.string.sleep)) || category.equals(context.getString(R.string.playtime))) {
             viewHolder.textView.setText(category);
             viewHolder.amountView.setText(formatDuration(babyActivity.getDuration()));
             viewHolder.amountView.setTextColor(color);
-        } else if (category.equals("FEEDING")) {
-            String feedingCategory = babyActivity.getFeeding_category().trim();
+        } else if (category.equals(context.getString(R.string.feeding))) {
+            String feedingCategory = babyActivity.getFeedingTypeString(context);
             viewHolder.textView.setText(category + ": " + feedingCategory);
-            if (feedingCategory.equals("Breastfeeding")) {
+            if (feedingCategory.equals(context.getString(R.string.breastfeeding))) {
                 viewHolder.amountView.setText(formatDuration(babyActivity.getDuration()));
                 viewHolder.amountView.setTextColor(color);
             } else {
@@ -199,7 +203,8 @@ public class BabyActivityAdapter extends RecyclerView.Adapter<BabyActivityAdapte
                 viewHolder.amountView.setText(formattedIntake);
                 viewHolder.amountView.setTextColor(color);
             }
-        } else if (category.equals("DIAPER_CHANGE")) {
+        } else if (category.equals(context.getString(R.string.diaper_change))) {
+            viewHolder.textView.setText(category);
             @SuppressLint("DefaultLocale") String Check;
             if (babyActivity.getDiaper_check()) {
                 Check = "OK";
@@ -209,6 +214,7 @@ public class BabyActivityAdapter extends RecyclerView.Adapter<BabyActivityAdapte
             viewHolder.amountView.setText(Check);
             viewHolder.amountView.setTextColor(color);
         } else {
+            viewHolder.textView.setText(category);
             @SuppressLint("DefaultLocale") String Check;
             if (babyActivity.getMedicine_check()) {
                 Check = "OK";

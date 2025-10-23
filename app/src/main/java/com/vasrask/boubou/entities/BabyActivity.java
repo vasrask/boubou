@@ -1,5 +1,7 @@
 package com.vasrask.boubou.entities;
 
+import android.content.Context;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.google.firebase.Timestamp;
@@ -14,8 +16,6 @@ public class BabyActivity {
     private boolean diaper_check;
     private boolean medicine_check;
     private double intake;
-    private String category;
-    private String feeding_category;
     private String userId;
     private Timestamp timestamp;
     private String notes;
@@ -27,9 +27,7 @@ public class BabyActivity {
         this.id = id;
         this.userId = userId;
         this.babyActivityType = category;
-        this.category = category.name();
         this.feedingType = feedingType;
-        this.feeding_category = feedingType.name();
         if (this.babyActivityType == BabyActivityType.SLEEP || this.babyActivityType == BabyActivityType.PLAYTIME) {
             this.duration = amount;
         } else if (this.babyActivityType == BabyActivityType.FEEDING) {
@@ -47,7 +45,6 @@ public class BabyActivity {
         this.id = id;
         this.userId = userId;
         this.babyActivityType = category;
-        this.category = category.name();
         if (this.babyActivityType == BabyActivityType.DIAPER_CHANGE) {
             this.diaper_check = check;
         } else if (this.babyActivityType == BabyActivityType.MEDICINE) {
@@ -56,7 +53,13 @@ public class BabyActivity {
         this.notes = notes;
         this.timestamp = null;
     }
+    public String getBabyActivityTypeString(Context context) {
+        return context.getString(babyActivityType.getId());
+    }
 
+    public String getFeedingTypeString(Context context) {
+        return context.getString(feedingType.getId());
+    }
     public Timestamp getTimestamp() {
         return timestamp;
     }
@@ -121,28 +124,21 @@ public class BabyActivity {
         this.medicine_check = check;
     }
 
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public String getFeeding_category() {
-        return feeding_category;
-    }
-
-    public void setFeeding_category(String category) {
-        this.feeding_category = category;
-    }
-
-    public BabyActivityType getBabyActivityType() {
+    public BabyActivityType getBaby_activity_type() {
         return babyActivityType;
     }
 
-    public void setBabyActivityType(BabyActivityType babyActivityType) {
+    public void setBaby_activity_type(BabyActivityType babyActivityType) {
         this.babyActivityType = babyActivityType;
+    }
+
+
+    public FeedingType getFeeding_type() {
+        return feedingType;
+    }
+
+    public void setFeeding_type(FeedingType feedingType) {
+        this.feedingType = feedingType;
     }
 
     @Override
@@ -151,7 +147,7 @@ public class BabyActivity {
         if (obj == null || getClass() != obj.getClass()) return false;
 
         BabyActivity that = (BabyActivity) obj;
-        return id.equals(that.id) && userId.equals(that.userId) && Objects.equals(category, that.category) && Objects.equals(timestamp, that.timestamp) && duration == that.duration;
+        return id.equals(that.id) && userId.equals(that.userId) && Objects.equals(babyActivityType, that.babyActivityType) && Objects.equals(timestamp, that.timestamp) && duration == that.duration;
     }
 
   @NonNull
@@ -159,31 +155,31 @@ public class BabyActivity {
   public String toString() {
       StringBuilder sb = new StringBuilder("BabyActivity{");
       sb.append("id='").append(id).append('\'')
-              .append(", category='").append(category).append('\'');
-      switch (category) {
-          case "SLEEP":
-          case "PLAYTIME":
+              .append(", babyActivityType='").append(String.format("%s",babyActivityType)).append('\'');
+      switch (babyActivityType) {
+          case SLEEP:
+          case PLAYTIME:
               sb.append(", duration='").append(duration)
                       .append("m").append('\'');
               break;
-          case "FEEDING":
-              if (feeding_category.equals("BREASTFEEDING")) {
+          case FEEDING:
+              if (feedingType == FeedingType.BREASTFEEDING) {
                   sb.append(", duration='").append(duration)
                           .append("m").append('\'');
               } else {
                   sb.append(", intake='").append(intake)
                           .append("ml").append('\'');
               }
-              sb.append(", feeding_category='").append(feeding_category).append('\'');
+              sb.append(", feedingType='").append(String.format("%s",feedingType)).append('\'');
               break;
-          case "DIAPER_CHANGE":
+          case DIAPER_CHANGE:
               if (diaper_check) {
                   sb.append(", diapered").append('\'');
               } else {
                   sb.append(", Did not change diaper").append('\'');
               }
               break;
-          case "MEDICINE":
+          case MEDICINE:
               if (medicine_check) {
                   sb.append(", took medicine");
               } else {

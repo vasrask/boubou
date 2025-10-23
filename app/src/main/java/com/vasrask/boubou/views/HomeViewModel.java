@@ -109,39 +109,7 @@ public class HomeViewModel extends ViewModel {
         });
     }
 
-    private BabyActivityType mapBabyActivityType(String category) {
-        if (category == null) return BabyActivityType.OTHER;
-
-        switch (category.toLowerCase().trim()) {
-            case "sleep":
-                return BabyActivityType.SLEEP;
-            case "feeding":
-                return BabyActivityType.FEEDING;
-            case "diaperChange":
-                return BabyActivityType.DIAPER_CHANGE;
-            case "medicine":
-                return BabyActivityType.MEDICINE;
-            case "playtime":
-                return BabyActivityType.PLAYTIME;
-            default:
-                return BabyActivityType.OTHER;
-        }
-    }
-    private FeedingType mapFeedingType(String category) {
-        if (category == null) return FeedingType.NO_FEEDING;
-
-        switch (category.toLowerCase().trim()) {
-            case "breastfeeding":
-                return FeedingType.BREASTFEEDING;
-            case "pumped breast milk":
-                return FeedingType.PUMPED_BREAST_MILK;
-            case "formula":
-                return FeedingType.FORMULA;
-            default:
-                return FeedingType.NO_FEEDING;
-        }
-    }
-    public void storeBabyActivity(double amount, boolean check, String selectedCategory, String feedingType, String notes) {
+    public void storeBabyActivity(double amount, boolean check, BabyActivityType selectedCategory, FeedingType feedingType, String notes) {
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
@@ -155,34 +123,36 @@ public class HomeViewModel extends ViewModel {
 
         userDocRef.get().addOnSuccessListener(documentSnapshot -> {
         BabyActivity babyActivity;
-        Log.d("SpinnerDebugg", String.format("amount %f", amount));
-            if (amount != 0) {
-            babyActivity = new BabyActivity(UUID.randomUUID().toString(), currentUser.getUid(), amount, mapBabyActivityType(selectedCategory), mapFeedingType(feedingType), notes);
+        if (amount != 0) {
+            babyActivity = new BabyActivity(UUID.randomUUID().toString(), currentUser.getUid(), amount, selectedCategory, feedingType, notes);
+            Log.d("FEEDING", String.format("OBJECT_CREATED. Feeding type %s", feedingType));
         } else {
-            babyActivity = new BabyActivity(UUID.randomUUID().toString(), currentUser.getUid(), check, mapBabyActivityType(selectedCategory), notes);
+            babyActivity = new BabyActivity(UUID.randomUUID().toString(), currentUser.getUid(), check, selectedCategory, notes);
         }
+            Log.d("NAME", String.format("%s", selectedCategory));
             Map<String, Object> txMap = new HashMap<>();
             txMap.put("id", babyActivity.getId());
             txMap.put("userId", babyActivity.getUserId());
-            txMap.put("category", babyActivity.getCategory());
-            switch (babyActivity.getCategory()){
-                case "SLEEP":
-                case "PLAYTIME":
+            txMap.put("baby_activity_type", babyActivity.getBaby_activity_type());
+            switch (babyActivity.getBaby_activity_type()){
+                case SLEEP:
+                case PLAYTIME:
                     txMap.put("duration", babyActivity.getDuration());
                     break;
-                case "FEEDING":
-                    if (feedingType.equals("Breastfeeding")) {
-                        txMap.put("feeding_category", feedingType);
+                case FEEDING:
+                    FeedingType feeding_type = babyActivity.getFeeding_type();
+                    txMap.put("feeding_type", feeding_type);
+                    if (feeding_type == FeedingType.BREASTFEEDING) {
                         txMap.put("duration", babyActivity.getDuration());
                     } else {
                         txMap.put("intake", babyActivity.getIntake());
-                        txMap.put("feeding_category", feedingType);
                     }
+                    Log.d("FEEDING", String.format("stored eeding type %s", feeding_type));
                     break;
-                case "DIAPER_CHANGE":
+                case DIAPER_CHANGE:
                     txMap.put("diaper_check", babyActivity.getDiaper_check());
                     break;
-                case "MEDICINE":
+                case MEDICINE:
                     txMap.put("medicine_check", babyActivity.getMedicine_check());
                     break;
                 default:

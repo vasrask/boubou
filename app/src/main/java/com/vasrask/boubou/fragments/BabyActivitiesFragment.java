@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.vasrask.boubou.R;
 import com.vasrask.boubou.BabyActivityAdapter;
+import com.vasrask.boubou.entities.BabyActivityType;
 import com.vasrask.boubou.views.BabyActivitiesViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -43,7 +44,7 @@ public class BabyActivitiesFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         BabyActivitiesViewModel = new ViewModelProvider(this).get(BabyActivitiesViewModel.class);
-        babyActivityAdapter = new BabyActivityAdapter();
+        babyActivityAdapter = new BabyActivityAdapter(requireContext());
     }
 
     @SuppressLint("ResourceAsColor")
@@ -138,11 +139,11 @@ public class BabyActivitiesFragment extends Fragment {
         recyclerView.scrollToPosition(0);
 
 
-        List<String> babyActivityCategories = Arrays.asList("SLEEP", "FEEDING", "DIAPER_CHANGE", "MEDICINE", "PLAYTIME", "OTHER");
+        List<BabyActivityType> babyActivityCategories = Arrays.asList(BabyActivityType.SLEEP, BabyActivityType.FEEDING, BabyActivityType.DIAPER_CHANGE, BabyActivityType.MEDICINE, BabyActivityType.PLAYTIME, BabyActivityType.OTHER);
 
         String upperCaseFilter = selectedFilter.toUpperCase();
 
-        if (babyActivityCategories.contains(upperCaseFilter)) {
+        if (babyActivityCategories.contains(BabyActivityType.fromString(upperCaseFilter))) {
             BabyActivitiesViewModel.fetchBabyActivitiesByType(upperCaseFilter);
             return;
         }
