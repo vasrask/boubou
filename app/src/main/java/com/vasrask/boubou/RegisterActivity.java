@@ -10,6 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.vasrask.boubou.entities.Language;
 import com.vasrask.boubou.entities.User;
 import com.vasrask.boubou.utils.LocaleHelper;
 import com.google.android.material.textfield.TextInputEditText;
@@ -45,16 +47,12 @@ public class RegisterActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.loginButton);
 
         languageDropdown  = findViewById(R.id.languageDropdown);
-        String[] languages = {"English", "Ελληνικά"};
+        String[] languages = Language.getLanguageList();
         ArrayAdapter<String> languageAdapter = new ArrayAdapter<>(this, R.layout.dropdown_item, R.id.dropdownItemText, languages);
         languageDropdown.setAdapter(languageAdapter);
         languageDropdown.setOnItemClickListener((parent, view, position, id) -> {
             String selected = (String) parent.getItemAtPosition(position);
-            if (selected.equals("Ελληνικά")) {
-                selectedLanguageCode = "el";
-            } else {
-                selectedLanguageCode = "en";
-            }
+            selectedLanguageCode = Language.fromName(selected).getCode();
             Log.d(TAG, "User selected language: " + selectedLanguageCode);
         });
 

@@ -24,6 +24,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.vasrask.boubou.entities.BabyActivityType;
 import com.vasrask.boubou.entities.FeedingType;
+import com.vasrask.boubou.entities.Language;
 import com.vasrask.boubou.utils.LocaleHelper;
 import com.vasrask.boubou.views.HomeViewModel;
 
@@ -47,6 +48,8 @@ public class DashboardActivity extends AppCompatActivity {
 
         BabyActivityType.init(this);
         FeedingType.init(this);
+        Language.init();
+
         setContentView(R.layout.activity_dashboard);
 
         Objects.requireNonNull(getSupportActionBar()).setTitle(getString(R.string.app_name));

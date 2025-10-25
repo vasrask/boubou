@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.vasrask.boubou.entities.Language;
 import com.vasrask.boubou.utils.LocaleHelper;
 import com.vasrask.boubou.views.UserViewModel;
 
@@ -55,27 +56,22 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void setupLanguageSpinner() {
-        String[] languages = {"English", "Ελληνικά"};
+        String[] languages = Language.getLanguageList();
         ArrayAdapter<String> languageAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, languages);
         languageAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         languageSpinner.setAdapter(languageAdapter);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-        //SharedPreferences prefs = getSharedPreferences("app_settings", MODE_PRIVATE);
         String savedCode = prefs.getString("app_lang", "en");
-        int savedIndex = savedCode.equals("en") ? 0 : 1;
+        int savedIndex = Language.fromCode(savedCode).getId();
         languageSpinner.setSelection(savedIndex);
 
         languageSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selected = (String) parent.getItemAtPosition(position);
-                if (selected.equals("Ελληνικά")) {
-                    selectedLanguageCode = "el";
-                } else {
-                    selectedLanguageCode = "en";
-                }
+                selectedLanguageCode = Language.fromName(selected).getCode();
                 if (!selectedLanguageCode.equals(prefs.getString("app_lang", "en"))) {
                     SharedPreferences.Editor editor = prefs.edit();
                     editor.putString("app_lang", selectedLanguageCode);
