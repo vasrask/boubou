@@ -14,6 +14,7 @@ public class UserViewModel extends ViewModel {
     private final MutableLiveData<Integer> babyActivitiesCount = new MutableLiveData<>();
     private final MutableLiveData<String> username = new MutableLiveData<>();
     private final MutableLiveData<String> email = new MutableLiveData<>();
+    private final MutableLiveData<String> language = new MutableLiveData<>();
     private final String TAG = "UserViewModel";
     private final MutableLiveData<String> errorLiveData = new MutableLiveData<>();
 
@@ -46,6 +47,17 @@ public class UserViewModel extends ViewModel {
         }).addOnFailureListener(e -> {
             errorLiveData.setValue(e.getMessage());
             Log.e(TAG, "Failed to update profile", e);
+        });
+    }
+
+    public void updateLanguage(String newLanguage) {
+        userRepository.updateLanguage(newLanguage).addOnSuccessListener(aVoid -> {
+            errorLiveData.setValue(null);
+            language.setValue(newLanguage);
+
+        }).addOnFailureListener(e -> {
+            errorLiveData.setValue(e.getMessage());
+            Log.e(TAG, "Failed to update language", e);
         });
     }
 

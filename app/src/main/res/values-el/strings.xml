@@ -89,4 +89,6 @@
     <string name="navigation_drawer_close">Κλείσιμο μενού πλοήγησης</string>
     <string name="menu">Μενού</string>
     <string name="settings">Ρυθμίσεις</string>
+    <string name="enable_notifications">Ενεργοποιήστε τις ειδοποιήσεις</string>
+    <string name="language">Γλώσσα</string>
 </resources>

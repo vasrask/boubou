@@ -69,5 +69,17 @@ public class UserRepository {
         return db.collection("users").document(currentUser.getUid()).update("username", username.trim());
     }
 
+    public Task<Void> updateLanguage(String language) {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
 
+        if (currentUser == null) {
+            return Tasks.forException(new Exception("User not logged in"));
+        }
+
+        if (language == null || language.trim().isEmpty()) {
+            return Tasks.forException(new IllegalArgumentException("Language cannot be empty"));
+        }
+
+        return db.collection("users").document(currentUser.getUid()).update("language_code", language.trim());
+    }
 }

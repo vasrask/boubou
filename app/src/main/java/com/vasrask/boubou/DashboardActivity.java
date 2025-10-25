@@ -2,7 +2,9 @@ package com.vasrask.boubou;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,7 +34,7 @@ public class DashboardActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
     private HomeViewModel homeViewModel;
-
+    private String currentLanguage;
     private FirebaseAuth mAuth;
     private static final String TAG = "DashboardActivity";
 
@@ -40,7 +42,9 @@ public class DashboardActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        currentLanguage = PreferenceManager.getDefaultSharedPreferences(this).getString("app_lang", "en");
         LocaleHelper.applySavedLocale(this);
+
         BabyActivityType.init(this);
         FeedingType.init(this);
         setContentView(R.layout.activity_dashboard);
@@ -76,7 +80,7 @@ public class DashboardActivity extends AppCompatActivity {
             if (id == R.id.nav_profile) {
                 startActivity(new Intent(DashboardActivity.this, ProfileActivity.class));
             } else if (id == R.id.nav_settings) {
-                Toast.makeText(this, "Settings clicked", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(DashboardActivity.this, SettingsActivity.class));
             } else if (id == R.id.nav_logout) {
                 logoutUser();
             }
@@ -107,4 +111,15 @@ public class DashboardActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String lang = prefs.getString("app_lang", "en");
+        if (!lang.equals(currentLanguage)) {
+            currentLanguage = lang;
+            LocaleHelper.applySavedLocale(this);
+            recreate();
+        }
+    }
 }
