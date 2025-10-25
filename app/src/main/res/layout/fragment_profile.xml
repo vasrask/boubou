@@ -24,7 +24,6 @@
             android:textStyle="bold"
             android:textSize="20sp" />
 
-        <!-- Username Field -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/usernameLayout"
             style="@style/Widget.Material3.TextInputLayout.FilledBox"
@@ -43,7 +42,6 @@
                 android:textColor="@android:color/primary_text_light" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Email Field (readonly) -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/emailLayout"
             style="@style/Widget.Material3.TextInputLayout.FilledBox"
@@ -72,7 +70,6 @@
             android:indeterminate="true"
             android:visibility="gone" />
 
-        <!-- Profile Image -->
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/profileImageView"
             android:layout_width="100dp"
@@ -83,7 +80,6 @@
             android:visibility="gone"
             app:shapeAppearance="@style/ShapeAppearance.Material3.MediumComponent" />
 
-        <!-- Save Image Button -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/uploadImageButton"
             style="@style/Widget.Material3.Button.TonalButton"
@@ -95,7 +91,6 @@
             android:textColor="@android:color/primary_text_light"
             android:visibility="gone" />
 
-        <!-- Save Button -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/saveProfileButton"
             style="@style/Widget.Material3.Button.TonalButton"

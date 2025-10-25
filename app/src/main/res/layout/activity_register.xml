@@ -9,9 +9,6 @@
     android:padding="24dp"
     tools:context=".RegisterActivity">
 
-    <!-- Username -->
-
-    <!-- Email -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/editUsernameProfileLayout"
         android:layout_width="0dp"
@@ -49,7 +46,6 @@
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- Password -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/editPasswordLayout"
         android:layout_width="0dp"
@@ -92,7 +88,6 @@
         android:textSize="16sp"/>
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- Register Button -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/registerBtn"
         style="@style/Widget.Material3.Button.TonalButton"
@@ -104,7 +99,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="24dp" />
 
-    <!-- Login Button -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/loginButton"
         style="@style/Widget.Material3.Button.TextButton"
