@@ -21,7 +21,8 @@
             android:text="@string/edit_your_profile"
             android:textAppearance="?attr/textAppearanceHeadlineMedium"
             android:textColor="@android:color/holo_blue_dark"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textSize="20sp" />
 
         <!-- Username Field -->
         <com.google.android.material.textfield.TextInputLayout

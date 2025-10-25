@@ -85,4 +85,8 @@
     <string name="pumped_breast_milk">Θήλαστρο</string>
     <string name="formula">Γάλα Σκόνη</string>
     <string name="no_feeding">Δεν είναι γεύμα</string>
+    <string name="navigation_drawer_open">Άνοιγμα μενού πλοήγησης</string>
+    <string name="navigation_drawer_close">Κλείσιμο μενού πλοήγησης</string>
+    <string name="menu">Μενού</string>
+    <string name="settings">Ρυθμίσεις</string>
 </resources>
